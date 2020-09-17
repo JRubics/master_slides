@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Jelena Dokić">
+  <title>Upotreba GitHub akcija za automatizaciju izrade i ocenjivanja studentskih zadataka</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="reveal.js/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="reveal.js/dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="pandoc.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Upotreba GitHub akcija za automatizaciju izrade i ocenjivanja studentskih zadataka</h1>
+  <p class="author">Jelena Dokić</p>
+  <p class="date">09/10.2020</p>
+</section>
+
+<section id="motivacija" class="slide level2">
+<h2>Motivacija</h2>
+<ul>
+<li>Zašto GitHub akcije?</li>
+<li>Kako se automatizuju izrada i ocenjivanje studentskih zadataka?</li>
+</ul>
+</section>
+<section id="github-akcije" class="slide level2">
+<h2>GitHub akcije</h2>
+<ul>
+<li>tok posla (workflow)</li>
+<li>reagovanje na događaje (create, delete, fork, push, pull_request, release)</li>
+<li>poslovi (jobs)</li>
+<li>koraci (steps)</li>
+<li>kontekst okruženja (github, env, job, steps, runner, secrets)</li>
+<li>Docker i JS akcije</li>
+<li>pokretač (runner)</li>
+<li>prodavnica (marketplace)</li>
+</ul>
+</section>
+<section id="od-čega-se-projekat-sastoji" class="slide level2">
+<h2>Od čega se projekat sastoji?</h2>
+<ul>
+<li>pjisp-­template-­name</li>
+<li>pjisp-diff</li>
+<li>poetry-publish</li>
+<li>smoke-test</li>
+<li>pjisp-assignment-template</li>
+</ul>
+</section>
+<section id="pjisp-assignment-template" class="slide level2">
+<h2>pjisp-assignment-template</h2>
+<ul>
+<li>šablonski repozitorijum</li>
+<li>služi za kreiranje i ocenjivanje studentskih zadataka</li>
+</ul>
+</section>
+<section id="pjisp-template-name" class="slide level2">
+<h2>pjisp-­template-­name</h2>
+</section>
+<section id="pjisp-template-name-1" class="slide level2">
+<h2>pjisp-­template-­name</h2>
+<ul>
+<li>Python konzolna aplikacija otvorenog koda</li>
+<li>proverava ispravnost naziva repozitorijuma</li>
+<li>pjisp-{SCHOOL_YEAR}-{COURSE_ID}-{TEST_ID}-{GROUP_ID}</li>
+</ul>
+</section>
+<section id="pjisp-diff" class="slide level2">
+<h2>pjisp­-diff</h2>
+</section>
+<section id="pjisp-diff-1" class="slide level2">
+<h2>pjisp­-diff</h2>
+<ul>
+<li>Python konzolna aplikacija otvorenog koda</li>
+<li>proverava da li su promenjene sve datoteke koje je potrebno menjati</li>
+<li>proverava da li su nepromenjene sve datoteke koje se ne smeju menjati</li>
+</ul>
+</section>
+<section id="pjisp-diff-2" class="slide level2">
+<h2>pjisp­-diff</h2>
+<p>Datoteke koje je uvek potrebno menjati:</p>
+<ul>
+<li>assignment_solution.c</li>
+<li>assignment.rst</li>
+</ul>
+<p>Datoteka koju nije dozvoljeno menjati:</p>
+<ul>
+<li>assignment_notes.rst</li>
+</ul>
+</section>
+<section id="pjisp-diff-3" class="slide level2">
+<h2>pjisp­-diff</h2>
+<p>Datoteka koju je potrebno menjati kada se kreira zadatak za T12:</p>
+<ul>
+<li>fixtures/stdio­numbers.yaml</li>
+</ul>
+<p>Datoteke koje je potrebno menjati kada se kreira zadatak za T34 ili SOV:</p>
+<ul>
+<li>fixtures/file­-error­-input-­not-­readable.yaml</li>
+<li>fixtures/file­-error­-output-­not-writable.yaml</li>
+<li>fixtures/file­-text.yaml</li>
+</ul>
+</section>
+<section id="poetry-publish" class="slide level2">
+<h2>poetry-­publish</h2>
+<ul>
+<li>GitHub akcija koja pri svakom novom objavljivanju verzije alata na GitHub­u, kreira i novu verziju Python paketa i postavlja je na PyPI repozitorijum</li>
+</ul>
+</section>
+<section id="poetry-publish-1" class="slide level2">
+<h2>poetry-­publish</h2>
+<p>Paramtri koje ova akcija očekuje su</p>
+<ul>
+<li>python_version</li>
+<li>poetry_version</li>
+<li>pypi_token</li>
+<li>repository_name</li>
+<li>repository_url</li>
+</ul>
+</section>
+<section id="poetry-publish-2" class="slide level2">
+<h2>poetry-­publish</h2>
+<ul>
+<li>u pjisp-template-name i pjisp-diff</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Python package</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="at">    </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="at">      tags:- &#39;v*.*.*&#39;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="at">      </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="at">      </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v2</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Change version in pyproject.toml</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="at">        REF=$(echo ${{ github.ref }} | sed &quot;s</span><span class="co">#\(refs/tags/\)\?v\?##&quot;)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="at">        sed -i &quot;s/^version=\&quot;.\+\&quot;/version=\&quot;$REF\&quot;/&quot; pyproject.toml</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build and publish to pypi</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> JRubics/poetry-publish@v1.1</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="at">          </span><span class="fu">pypi_token</span><span class="kw">:</span><span class="at"> ${{ secrets.PYPI_TOKEN }}</span></span></code></pre></div>
+</section>
+<section id="smoke_test" class="slide level2">
+<h2>smoke_test</h2>
+<ul>
+<li>konzolna aplikacija i API koji služi za testiranje studentskih zadataka</li>
+<li>izlazni kod kada dođe do greške</li>
+</ul>
+</section>
+<section id="pjisp-assignment-template-1" class="slide level2">
+<h2>pjisp-assignment-template</h2>
+<p>Nove funkcionalnosti:</p>
+<ul>
+<li>assignment­-diff - za proveru da li su izmenjene sve datoteke koje je potrebno menjati i da lisu ostale iste sve datoteke koje se ne smeju menjati</li>
+<li>assignment­-check - za proveru izmena datoteka i proveru ispravnosti primera rešenja</li>
+<li>get-­template - za pronalaženje naziva testa na osnovu naziva repozitorijuma i proveru ispravnosti naziva repozitorijuma</li>
+</ul>
+</section>
+<section id="pjisp-assignment-template-2" class="slide level2">
+<h2>pjisp-assignment-template</h2>
+<p>Izmene postojećih funkcionalnosti:</p>
+<ul>
+<li>init­ - dodatno, nakon generisanja datoteka na osnovu izabranog identifikatora testa, kreira se .template datoteka u koju se smešta identifikator za kasniju upotrebu</li>
+<li>test-­solution­ - dodato je da pre pokretanja funkcionalnosti zahteva da postoji assignment_solution.c datoteka</li>
+<li>assignment-­build­ - dodato je da pre pokretanja funkcionalnosti zahteva da postoji assignment_solution.c datoteka</li>
+<li>assignment-­pack -­ dodato je da se pre pakovanja, pored provere ispravnosti primera rešenja, proveri da li su izmenjene sve datoteke koje je potrebno menjati i da li su ostale iste svedatoteke koje se ne smeju menjati</li>
+</ul>
+</section>
+<section id="pjisp-assignment-template-3" class="slide level2">
+<h2>pjisp-assignment-template</h2>
+<p>Dodate zavisnosti u projektu upotrebom Pipenv-a:</p>
+<ul>
+<li>pjisp­-template-­name - poziva ga get-­template funkcionalnost sa nazivom repozitorijuma kao ulaznim parametrom i identifikatorom testa kao povratnom vrednošću</li>
+<li>pjisp­-diff - poziva ga assignment-diff funkcionalnost sa identifikatorom testa kao ulaznim parametrom</li>
+</ul>
+</section>
+<section id="pjisp-assignment-template-4" class="slide level2">
+<h2>pjisp-assignment-template</h2>
+<p>GitHub akcije:</p>
+<ul>
+<li>Project create</li>
+<li>PJISP assignment</li>
+</ul>
+</section>
+<section id="project-create" class="slide level2">
+<h2>Project create</h2>
+</section>
+<section id="project-create-1" class="slide level2">
+<h2>Project create</h2>
+<ul>
+<li>postavlja inicijalno stanje projekta</li>
+<li>na osnovu identifikatora testa kreiraj datoteke namenjene tom testu</li>
+<li>kreira bedž u README.rst datoteci</li>
+</ul>
+</section>
+<section id="project-create-2" class="slide level2">
+<h2>Project create</h2>
+<ul>
+<li>jedan posao koji se sastoji od šest koraka</li>
+<li>pokreće se na Ubuntu operativnom sistemu na “create” događaj</li>
+</ul>
+</section>
+<section id="project-create-koraci-1-2-3" class="slide level2">
+<h2>Project create koraci 1, 2, 3</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v2</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python 2.7</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v1</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="at">    </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="fl">2.7</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install pipenv</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="at">  </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> dschep/install-pipenv-action@v1</span></span></code></pre></div>
+</section>
+<section id="project-create-korak-4" class="slide level2">
+<h2>Project create korak 4</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> init_template</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="at">  REPO=$(echo ${{github.repository}} | cut -d &quot;/&quot; -f 2)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="at">  pipenv install</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="at">  TEMPLATE=$(pipenv run make get-template repo_name=$REPO)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="at">  pipenv run make init template=$TEMPLATE</span></span></code></pre></div>
+</section>
+<section id="project-create-korak-5" class="slide level2">
+<h2>Project create korak 5</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> add_badge</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="at">  REPO=${{github.repository}}echo &quot;|Actions Status|</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="at">  .. |Actions Status| \image</span><span class="fu">:</span><span class="kw">:</span><span class="at"> \</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="at">    https://github.com/ \</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="at">    $REPO/workflows/PJISP%20assignment/badge.svg</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="at">    </span><span class="fu">:alt</span><span class="kw">:</span><span class="at"> CPython build status on GitHub Actions</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="at">    </span><span class="fu">:target</span><span class="kw">:</span><span class="at"> https://github.com/$REPO/actions</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="at">  </span><span class="st">&quot; | cat - README.rst &gt; README</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="st">  mv README README.rst</span></span></code></pre></div>
+<p><img data-src="images/pjispassignment.png" style="width:150.0%" /></p>
+</section>
+<section id="project-create-korak-6" class="slide level2">
+<h2>Project create korak 6</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> push_changes</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="at">  git config --global user.email &quot;action@github.com&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="at">  git config --global user.name &quot;github&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="at">  git add .</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="at">  git commit -m &quot;Init template&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="at">  git push</span></span></code></pre></div>
+</section>
+<section id="project-create-završetak" class="slide level2">
+<h2>Project create završetak</h2>
+<ul>
+<li>po izvršavanju celog ovog toka poslova, repozitorijum je spreman za preuzimanje i kreiranje studentskog zadatka</li>
+<li>bedž u početku ima “failing” vrednost, pošto zadatak nije spreman za studente i očekuje se od nastavnog osoblja da ga kreira</li>
+</ul>
+</section>
+<section id="pjisp-assignment" class="slide level2">
+<h2>PJISP assignment</h2>
+</section>
+<section id="pjisp-assignment-1" class="slide level2">
+<h2>PJISP assignment</h2>
+<ul>
+<li>nakon izmene koda na repozitorijumu proveri da li je repozitorijum spreman za pregledanje od strane nastavnika i davanje studentima na rad</li>
+<li>proverava ispravnost primera rešenja</li>
+<li>menja status bedž-a</li>
+</ul>
+</section>
+<section id="pjisp-assignment-2" class="slide level2">
+<h2>PJISP assignment</h2>
+<ul>
+<li>jedan posao koji se sastoji od četiri koraka</li>
+<li>pokreće se na Ubuntu operativnom sistemu na “push” ili “pull-request” događaj</li>
+</ul>
+</section>
+<section id="pjisp-assignment-koraci-1-2-3" class="slide level2">
+<h2>PJISP assignment koraci 1, 2, 3</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v2</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python 2.7</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="at">  </span><span class="fu">if</span><span class="kw">:</span><span class="at"> ${{!contains(github.repository,&#39;pjisp-assignment-template&#39;)}}</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="at">  </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v1</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="at">    </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="at">      </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="fl">2.7</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install pipenv</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="at">  </span><span class="fu">if</span><span class="kw">:</span><span class="at"> ${{!contains(github.repository,&#39;pjisp-assignment-template&#39;)}}</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="at">  </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> dschep/install-pipenv-action@v1</span></span></code></pre></div>
+</section>
+<section id="pjisp-assignment-korak-4" class="slide level2">
+<h2>PJISP assignment korak 4</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run test</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="at">  </span><span class="fu">if</span><span class="kw">:</span><span class="at"> ${{!contains(github.repository,&#39;pjisp-assignment-template&#39;)}}</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="fu">  run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>    pipenv install</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>    pipenv run make assignment-check</span></code></pre></div>
+</section>
+<section id="pjisp-assignment-završetak" class="slide level2">
+<h2>PJISP assignment završetak</h2>
+<ul>
+<li>menja status bedža na osnovu uspešnosti izvršavanja testova</li>
+</ul>
+</section>
+<section id="primer-upotrebe" class="slide level2">
+<h2>primer upotrebe</h2>
+</section>
+<section id="zaključci" class="slide level2">
+<h2>zaključci</h2>
+<ul>
+<li>akcije nisu u potpunosti pouzdane <img data-src="images/status.png" /></li>
+<li>dokumentacija nije uvek usklađena sa alatom</li>
+<li>jednostavna upotreba</li>
+</ul>
+</section>
+<section id="hvala-na-pažnji" class="slide level2">
+<h2>Hvala na pažnji</h2>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js/dist/reveal.js"></script>
+
+  // reveal.js plugins
+  <script src="reveal.js/plugin/notes/notes.js"></script>
+  <script src="reveal.js/plugin/search/search.js"></script>
+  <script src="reveal.js/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

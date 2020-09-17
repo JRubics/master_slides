@@ -1,0 +1,25 @@
+.title {
+    font-size: 5rem !important;
+    color: #404 !important;
+}
+
+h2 {
+    color: #404 !important;
+}
+
+body{
+    background-color: #fff;
+}
+
+.reveal section img{
+    border: 4px solid #fff;
+    box-shadow: 0 0 10px #fff !important;
+}
+
+.reveal .progress{
+    color: #404;
+}
+
+div{
+    color: #404;
+}
